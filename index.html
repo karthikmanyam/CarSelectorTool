@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Car Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src='//www.aa.com/jquery.js'></script>
+    
+    <script src="fuzzyset.js"></script> 
+
+    <style>
+      #voice-input-btn {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+
+      #answer-box {
+        border: 1px solid black;
+        padding: 10px;
+        margin-top: 10px;
+      }
+      .card {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.car-image {
+  width: 200px;
+  height: 150px;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.car-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="result">
+      <p class="heading">Our Recommendation:</p>
+      <div class="card">
+        <img id="car-image" src="" alt="Car image" class="car-image">
+        <div class="card-info">
+          <p id="car-name" class="car-name"></p>
+          <p id="description" class="description"></p>
+          <p id="price" class="price"></p>
+        </div>
+      </div>
+    </div>    
+    <h1>Have A Doubt About Your Car</h1>
+       <h2>Ask Our AI</h2>
+    <div id="answer"></div>
+    <button id="voice-input-btn"><i class="fa fa-microphone"></i></button>
+    <input type="text" id="text-input" placeholder="Type your question...">
+    <button id="submit-btn">Submit</button>
+    <div id="answer-box"></div>
+    
+
+    
+
+    <script>
+      var script=null;
+      var script2=null;
+      const k=localStorage.getItem('RedBudget')
+      console.log(k)
+      const k1=localStorage.getItem('CarFuel')
+      console.log(k1)
+      const k2=localStorage.getItem('CarType')
+      console.log(k2)
+      // const k4=localStorage.getItem('CarModel')
+      // console.log(k4)
+      const formvalues=JSON.parse(localStorage.getItem('formvalues'))
+      console.log(formvalues)
+        let budget=k
+        var preference=k2
+        // var car=k3
+        var fuel=k1
+        let number
+      var car;
+      var carImg;
+      if (k === "low") {
+  if (k2 === "economy") {
+    if (k1 === "hybrid" || k1 === "electric") {
+      car = "toyota";
+      carImg="toyota.jpg"
+    } else {
+      car = "honda";
+      carImg="honda.jpeg"
+    }
+  } else if (k2 === "luxury") {
+    if (k1 === "hybrid" || k1 === "electric") {
+      car = "mercedes";
+      carImg="mercedes.jpeg"
+    } else {
+      car = "bmw";
+      carImg="bmw.jpg"
+    }
+  }
+} else if (k === "medium") {
+  if (k2 === "economy") {
+    if (k1 === "hybrid" || k1 === "electric") {
+      car = "toyota";
+      carImg="toyota.jpg"
+    } else {
+      car = "honda";
+      carImg="honda.jpeg"
+    }
+  } else if (k2 === "luxury") {
+    if (k1 === "hybrid" || k1 === "electric") {
+      car = "mercedes";
+      carImg="mercedes.jpeg"
+    } else {
+      car = "bmw";
+      carImg="bmw.jpg"
+    }
+  }
+} else if (k === "high") {
+  if (k2 === "economy") {
+    if (k1 === "hybrid" || k1 === "electric") {
+      car = "toyota";
+      carImg="toyota.jpg"
+    } else {
+      car = "honda";
+      carImg="honda.jpeg"
+    }
+  } else if (k2 === "luxury") {
+    if (k1 === "hybrid" || k1 === "electric") {
+      car = "mercedes";
+      carImg="mercedes.jpeg"
+    } else {
+      car = "ferrari";
+      carImg="ferrari.jpeg"
+    }
+  }
+}
+console.log(car)
+k3=car
+
+        if(k3=="ferrari"){
+          if(budget=="low"||budget=="medium"||preference=="economy"){
+            console.log('low');
+            number=50;
+          }
+          else if(budget=="high"||preference=="luxury"){
+            console.log("high");
+            number=80;
+          }
+        }
+        if (k3 === "mercedes") {
+  if (budget === "low" || budget === "medium" || preference === "economy") {
+    console.log("low");
+    number = 30;
+  } else if (budget === "high" || preference === "luxury") {
+    console.log("high");
+    number = 60;
+  }
+}
+if (k3 === "bmw") {
+  if (budget === "low" || budget === "medium" || preference === "economy") {
+    console.log("low");
+    number = 25;
+  } else if (budget === "high" || preference === "luxury") {
+    console.log("high");
+    number = 50;
+  }
+}
+if (k3 === "honda") {
+  if (budget === "low" || budget === "medium" || preference === "economy") {
+    console.log("low");
+    number = 15;
+  } else if (budget === "high" || preference === "luxury") {
+    console.log("high");
+    number = 30;
+  }
+}
+if (k3 === "toyota") {
+  if (budget === "low" || budget === "medium" || preference === "economy") {
+    console.log("low");
+    number = 10;
+  } else if (budget === "high" || preference === "luxury") {
+    console.log("high");
+    number = 20;
+  }
+}
+
+let result;
+
+if (car === "ferrari") {
+  result = "You should buy a Ferrari! This is a luxury car that will impress everyone.";
+} else if (car === "mercedes" || car === "bmw") {
+  result = "You should buy a " + car + " car! These luxury cars offer comfort and style.";
+} else if (car === "honda" || car === "toyota") {
+  result = "You should buy a " + car.toLocaleUpperCase() + " car! These economy cars are reliable and affordable.";
+} else {
+  result = "Sorry, we couldn't find a car that matches your preferences.";
+}
+var carNameElement = document.getElementById("car-name");
+var descriptionElement = document.getElementById("description");
+var priceElement = document.getElementById("price");
+var carImageElement = document.getElementById("car-image");
+carNameElement.innerHTML = car.toUpperCase();
+descriptionElement.innerHTML =result;
+priceElement.innerHTML = "Price: " + number+"K $";
+carImageElement.src = carImg;
+
+// document.getElementById("result").innerHTML = result;
+        var str="price(" + car + "," + number + ").\n";
+        console.log(str)
+      var isClose=true;
+      const stopwords = ["of", "the", "a", "an", "any", "is", "can", "who", "what", "why", "whom","how","much","is"];
+      var editor = "sorts\n" +
+" #budget = {" + budget + ",high}.\n"+
+" #preference =  {" + preference + ",luxury}.\n" +
+" #car = {" + car + "}.\n" +
+" #fuelEconomy={" + fuel + "}.\n" +
+" #number={" + number + "}.\n" +
+"predicates\n" +
+" within_budget(#budget, #car).\n" +
+" prefer(#preference, #car).\n" +
+" costly(#car).\n" +
+" price(#car,#number).\n" +
+" fuel(#car,#fuelEconomy).\n" +
+" cheap(#car).\n" +
+"rules\n" +
+"price(" + car + "," + number + ").\n"+
+"fuel(" + car + "," + fuel + ").\n"+
+"within_budget(" + budget + "," + car + ").\n" +
+"prefer(" + preference + "," + car + ").\n"+
+" costly(X):-within_budget(high,X),prefer(luxury,X),price(X,Y),Y>=50.\n" +
+" cheap(X):- not costly(X).";
+        // sorts
+        var contstring = editor.split("sorts\n")[1].split("predicates\n");
+        console.log(contstring)
+        var sortstring = contstring[0].split('.');
+        sortstring.splice(-1, 1);
+        
+        var sorts = {};
+        sortstring = sortstring.map(d => d.replace(/\n/g, '').trim()).forEach(d => {
+            var par = d.split("=");
+            sorts[par[0].replace(/#/, '').trim()] = par[1].replace(/{|}/g, '').split(',').map(w => w.trim())
+        })
+        console.log("final is"+sortstring);
+        console.log(sorts);
+        // predicates
+        var predicates = {};
+        contstring = contstring[1].split("rules\n");
+        sortstring = contstring[0].split('.');
+        sortstring.splice(-1, 1);
+        sortstring.forEach(d => {
+            var part = d.replace(/\n/g, '').trim().split('(');
+            var func = part[0];
+            predicates[func] = {};
+            var par = part[1].split(',').map(e => e.replace(/#|\)/g, '').trim());
+            var par1 = sorts[par[0]].slice();
+            par1.push("X");
+            par.splice(0, 1);
+            par1.forEach(e => {
+                var strinh = (e == 'X' ? '' : (e + ' ')) + func;
+                predicates[func][strinh] = func + "(" + e + ")";
+                par.forEach(par2 => {
+                    var temp = sorts[par2].slice();
+                    temp.push("X");
+                    temp.forEach(t => {
+                        var strinh = (e == 'X' ? '' : (e + ' ')) + func + (t == 'X' ? '' : (' ' + t));
+                        // if (strinh != fubnc)
+                        predicates[func][strinh] = func + "(" + e + "," + t + ")";
+                    })
+                });
+            });
+            console.log(predicates)
+        });
+
+
+        var all_predicates = [];
+        for (var key1 in predicates) {
+            if (predicates.hasOwnProperty(key1)) {
+                for (var key2 in predicates[key1]) {
+                    if (predicates[key1].hasOwnProperty(key2))
+                        all_predicates.push(key2);
+                }
+            }
+
+        }
+        all_predicates.push('speak spanish'); // extra terms
+        a = FuzzySet(all_predicates);
+      
+      console.log(all_predicates)
+      
+      
+      // Speech recognition API
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+
+      // Get DOM elements
+      const answerDiv = document.querySelector('#answer');
+      const voiceBtn = document.getElementById('voice-input-btn');
+      const textInput = document.getElementById('text-input');
+      const submitBtn = document.getElementById('submit-btn');
+      const answerBox = document.getElementById('answer-box');
+      // Get a reference to the button element
+
+
+
+      submitBtn.addEventListener('click', () => {
+        const question = textInput.value;
+        if (question.trim() === '') {
+          answerBox.innerHTML = 'Please ask a question.';
+          return;
+        }
+        var trim_script = question.split(" ");
+        trim_script = trim_script.filter(f => !stopwords.includes(f));
+        console.log("the script is"+trim_script)
+        script=trim_script;
+        var queryQues = a.get(trim_script.join(" "), null, 0.5);
+        console.log(queryQues); 
+        getAnswer(queryQues);
+        
+      });
+
+      // Handle speech recognition
+      recognition.onresult = event => {
+        const resultIndex = event.resultIndex;
+        const transcript = event.results[resultIndex][0].transcript;
+        textInput.value = transcript.toLowerCase();
+        console.log("neeayya"+transcript)
+        
+        var trim_script = transcript.split(" ");
+        trim_script = trim_script.filter(f => !stopwords.includes(f));
+        
+        script2=trim_script
+        script2=script2.map(function(str){
+          return str.toLowerCase()
+        });
+        console.log("script2"+script2)
+        var queryQues = a.get(trim_script.join(" "), null, 0.5);
+        console.log("hellllll"+queryQues);
+        getAnswer(queryQues);
+      };
+
+      // Handle click on voice input button     
+      function startSpeechRecognition() {
+        recognition.start();
+      }
+      voiceBtn.addEventListener('click', startSpeechRecognition);
+
+
+      function getAnswer(question) {
+        
+        if (question!=null) {
+                var mainkey = question[0][1].replace('speak ','');
+                var answerarr = mainkey.split(' ');
+                var key1 = '';
+                answerarr.forEach(d => {
+                    key1 = (predicates[d] != undefined) ? d : key1;
+                });
+                //var key1 = answerarr.length>2? answerarr[1]:answerarr[0];
+                var key2 = mainkey;
+                console.log(key1 +'-'+ key2);
+                console.log(predicates[key1][key2]);
+                
+                var data = {
+                    'action': "getQuery",
+                    'query': predicates[key1][key2],
+                    'editor': editor
+                };
+          
+          console.log("yoyo"+data)
+          
+          
+          
+          $.ajax({
+          url: "https://cors-anywhere.herokuapp.com/http://wave.ttu.edu/ajax.php",
+          type: "POST",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest"
+          },
+          data: {
+            action: "getQuery",
+            query: predicates[key1][key2],
+            editor: editor
+          },
+          success: function(response) {
+            console.log("hi"+response);
+             const answer = response || 'Sorry, I could not find an answer.';
+              // answerDiv.innerHTML = answer;
+               answerBox.innerHTML = answer;
+            var elem = answerBox.getElementsByTagName('p');
+             var TextInsideLi = elem[0].innerHTML;
+             TextInsideLi=TextInsideLi.replace(/<br\s*\/?>/gi, "")
+             TextInsideLi=TextInsideLi.trim()
+             TextInsideLi=TextInsideLi.replace("X =","")
+             console.log("hi"+TextInsideLi)
+if(script==null && answer.includes('price')){
+  script2.includes(car)
+  answerDiv.innerHTML = "The Price is "+number+"K $";
+
+
+}
+            else{
+              answerDiv.innerHTML="There is no car in my memory"
+            }
+            if(answer.includes("budget")){
+              
+              answerDiv.innerHTML="The Budget of "+car+" is "+TextInsideLi
+            }
+            if(answer.includes("fuel")){
+              
+              answerDiv.innerHTML="The Fuel Type of "+car+" is "+TextInsideLi
+            }
+            if(answer.includes("prefer")){
+              
+              answerDiv.innerHTML="The Preference of "+car+" is "+TextInsideLi
+            }
+            
+            
+
+
+             if(TextInsideLi=="yes"){
+               console.log("inside if")
+               answerDiv.innerHTML ="Yes it  is"
+               answerDiv.innerHTML+="<img src=https://us.123rf.com/450wm/seamartini/seamartini2209/seamartini220900298/192198381-car-with-location-mark-and-magnifier-search-color-icon-vector-finder-sign-and-auto-on-rent-search.jpg?ver=6>"
+
+             }
+             
+             
+            
+             
+             
+          },
+          error: function(xhr, status, error) {
+            console.log("error: " + error);
+          }
+        });
+
+
+
+          
+          //$.post("http://localhost/ajax.php", { url: "http://wave.ttu.edu/" , data:data}, function (response) {
+                // Expected response : answer sets
+                //$.post("http://localhost/ajax/ajax.js",  function (response) {
+                //$.post("http://localhost/ajaxtest.php", function (response) {  
+                 // $.post("https://cors-anywhere.herokuapp.com/http://wave.ttu.edu/", data, function (response) {
+                  
+                   // console.log(response);
+                  
+                  
+                   // var html = document.createElement("html");
+                   // html.innerHTML = response;
+                    // contentRan
+                   // var answerstring = html.querySelector("p").textContent.replace(/X =/gm, "");
+                  //  var answerarr = answerstring.split("\n");
+                  //  answerarr.splice(-1,1);
+                 //   console.log(answerarr);
+                 //   var pre_string = "The answer to your question " + transcript + " is ";
+                 //   answerstring = contentRan.answer[answerarr[0].toLowerCase().trim()]==undefined?
+                 //       (pre_string + (answerarr.length==1?answerstring:(answerarr.splice(-1, 0, "and"),answerarr.join())))
+                 //       : generaspeak(contentRan.answer[answerarr[0].toLowerCase().trim()]);
+                //    console.log(answerstring);
+                  
+                //   const answer = answerstring || 'Sorry, I could not find an answer.';
+               //   answerDiv.innerHTML = answer;
+               //   answerBox.innerHTML = answer;
+               //   console.log(answer);
+                    
+               // });
+            }
+        }
+        
+ 
+
+    </script>
+  </body>
+</html>

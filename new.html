@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Car Selection System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="new.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src='//www.aa.com/jquery.js'></script>
+    
+    <script src="fuzzyset.js"></script>
+    <script type="text/javascript" src="new.js"></script>
+
+    <style>
+    body {
+    background-image: url("car.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-position: center; */
+  }
+  .center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.form-container {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+   
+  </style>
+  </head>
+  <body>
+  <h1>Car Selector Tool</h1>
+  <marquee behavior='alternate' scrollamount='10' style='font-size: 20px;'>🚗 Get cars of your choice 🚗</marquee>
+  
+ <div class="center">
+  <div class="container">
+    <div class="form-container">
+      <h2 text-align="center">Select from below options</h2>
+      <form id='form' >
+        <div class="form-group">
+          <!-- <label for="carmodel"><b>Make:</b></label>
+          <select class="form-control" id="carmodel" name="carmodel" onchange="getCarModel();">
+            <option value="" disabled selected hidden>Select car model</option>
+            <option value="toyota">Toyota</option>
+            <option value="honda">Honda</option>
+            <option value="bmw">BMW</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="ferrari">Ferrari</option>
+          </select>
+        </div> -->
+        <div class="form-group">
+          <label for="budget"><b>Budget:</b></label>
+          <select class="form-control" id="budget" name="budget"  onchange="getBudget();" required>
+            <option value="" disabled selected hidden>Select Budget</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cartype"><b>Car Type:</b></label>
+          <select class="form-control" id="cartype" name="cartype"onchange="getCarType();" required>
+            <option value="" disabled selected hidden>Select car Type</option>
+            <option value="economy">Economy</option>
+            <option value="luxury">Luxury</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="carfuel"><b>Fuel Type:</b></label>
+            <select id="carfuel" name="carfuel" class="form-control" onchange="getFuelType();">
+              <option value="" disabled selected hidden>Select Fuel Type</option>
+              <option value="petrol">Petrol</option>
+              <option value="diesel">Diesel</option>
+              <option value="electric">Electric</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button type="submit"  class="btn btn-primary btn-block" >Submit</button>
+           
+          </div>
+          <p id="message"></p>
+       
+      </form>
+      <!-- <button  id='sub' class="btn btn-primary btn-block">Submit</button> -->
+    </div>
+    </div>
+    </div>
+    
+
+   
+      <script>
+        
+        // function getCarModel(){
+        //  var carmodel=document.getElementById('carmodel').value
+        //  localStorage.setItem('CarModel',carmodel)
+        //  console.log(carmodel)
+        // }
+        function getBudget(){
+         var budget=document.getElementById('budget').value
+         localStorage.setItem('RedBudget',budget)
+         console.log(budget)
+        }
+        function getCarType(){
+         var cartype=document.getElementById('cartype').value
+         localStorage.setItem('CarType',cartype)
+         console.log(cartype)
+        }
+        function getFuelType(){
+         var carfuel=document.getElementById('carfuel').value
+         localStorage.setItem('CarFuel',carfuel)
+         console.log(carfuel)
+        }
+        let button = document.getElementById("sub");
+        form.addEventListener('submit',function(e){
+          e.preventDefault();
+          const formdata=new FormData(form)
+          const formvalues=Object.fromEntries(formdata.entries())
+          const Budget=budget.value;
+          // const carModel=carmodel.value;
+          const carType=cartype.value;
+          const carFuel=carfuel.value;
+          localStorage.setItem('RedBudget',Budget)
+          // localStorage.setItem('CarModel',carModel)
+          localStorage.setItem('CarType',carType)
+          localStorage.setItem('CarFuel',carFuel)
+          localStorage.setItem('formvalues',JSON.stringify(formvalues))
+          console.log(formvalues)
+          if (Object.keys(formvalues).length === 0) {
+            document.getElementById('message').textContent = 'Please choose an option';
+  console.log('Choose options');
+} else {
+  localStorage.setItem('formvalues', JSON.stringify(formvalues));
+  console.log(formvalues);
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 1000);
+}
+          // setTimeout(()=>{
+          //   window.location.href='index.html'
+          // },1000
+          // )
+
+      
+          // window.location.href='index.html'
+
+        })
+        
+        
+
+      
+        
+          
+   
+  
+      </script>
+  
+  </body>
+  
+</html>
